@@ -11,7 +11,7 @@ tag.
 
 [![build status](https://img.shields.io/travis/browserify/browserify/master.svg)](https://travis-ci.org/browserify/browserify)
 
-![browserify!](http://substack.net/images/browserify_logo.png)
+![browserify!](./assets/logo.png)
 
 # getting started
 
@@ -487,6 +487,12 @@ as the `opts.vars` parameter.
 `opts.externalRequireName` defaults to `'require'` in `expose` mode but you can
 use another name.
 
+`opts.bare` creates a bundle that does not include Node builtins, and does not
+replace global Node variables except for `__dirname` and `__filename`.
+
+`opts.node` creates a bundle that runs in Node and does not use the browser
+versions of dependencies. Same as passing `{ bare: true, browserField: false }`.
+
 Note that if files do not contain javascript source code then you also need to
 specify a corresponding transform for them.
 
@@ -504,7 +510,9 @@ If `file` is an array, each item in `file` will be added as an entry file.
 
 Make `file` available from outside the bundle with `require(file)`.
 
-The `file` param is anything that can be resolved by `require.resolve()`.
+The `file` param is anything that can be resolved by `require.resolve()`,
+including files from `node_modules`. Like with `require.resolve()`, you must
+prefix `file` with `./` to require a local file (not in `node_modules`).
 
 `file` can also be a stream, but you should also use `opts.basedir` so that
 relative requires will be resolvable.
@@ -690,7 +698,7 @@ sophisticated things you can do in the package.json:
 
 ## browser field
 
-There is a special "[browser](https://gist.github.com/4339901)" field you can
+There is a special "[browser](https://github.com/defunctzombie/package-browser-field-spec)" field you can
 set in your package.json on a per-module basis to override file resolution for
 browser-specific versions of files.
 
@@ -816,6 +824,6 @@ Releases are documented in
 
 # license
 
-MIT
+[MIT](./LICENSE)
 
-![browserify!](http://substack.net/images/browserify/browserify.png)
+![browserify!](./assets/browserify.png)
